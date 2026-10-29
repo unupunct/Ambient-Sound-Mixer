@@ -7,7 +7,10 @@ using AmbientSoundMixer.Core.Models;
 
 namespace AmbientSoundMixer.App.ViewModels;
 
-public sealed record DeviceOption(string? Id, string Name);
+public sealed record DeviceOption(string? Id, string Name)
+{
+    public override string ToString() => Name;
+}
 
 public sealed class SettingsViewModel : ObservableObject
 {

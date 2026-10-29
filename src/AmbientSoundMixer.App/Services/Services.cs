@@ -7,16 +7,15 @@ namespace AmbientSoundMixer.App.Services;
 
 public static class ThemeService
 {
-    private static ResourceDictionary? _current;
-
     public static void Apply(AppTheme mode)
     {
         var uri = new Uri($"pack://application:,,,/AmbientSoundMixer;component/Themes/{(mode == AppTheme.Light ? "Light" : "Dark")}.xaml");
-        var dict = new ResourceDictionary { Source = uri };
         var merged = Application.Current.Resources.MergedDictionaries;
-        if (_current != null) merged.Remove(_current);
-        merged.Insert(0, dict);
-        _current = dict;
+        // Remove every theme dictionary (including the one App.xaml loads) so the new one is the only palette.
+        foreach (var d in merged.Where(d => d.Source != null && d.Source.OriginalString.Contains("Themes/Dark.xaml", StringComparison.OrdinalIgnoreCase)
+                                          || d.Source != null && d.Source.OriginalString.Contains("Themes/Light.xaml", StringComparison.OrdinalIgnoreCase)).ToList())
+            merged.Remove(d);
+        merged.Insert(0, new ResourceDictionary { Source = uri });
     }
 }
 

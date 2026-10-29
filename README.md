@@ -7,7 +7,17 @@ No subscription, no cloud, no ads, no network access.
 
 ## Screenshots
 
-_Screenshots to be added before the first public release (the app window at 1120x760 in dark and light themes)._
+Dark theme, Ocean scenario playing:
+
+![Mixer, dark theme](docs/screenshots/mixer-dark.png)
+
+Light theme:
+
+![Mixer, light theme](docs/screenshots/mixer-light.png)
+
+Settings:
+
+![Settings](docs/screenshots/settings-dark.png)
 
 ## Features
 
