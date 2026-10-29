@@ -1,4 +1,6 @@
 name: Release
+# Runs when a v* tag is pushed. If a release for the tag already exists (for example one published by hand
+# with locally built artifacts), the workflow does nothing.
 on:
   push:
     tags: ["v*"]
@@ -9,15 +11,27 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Check for existing release
+        id: check
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${{ github.ref_name }}" *> $null
+          "exists=$($LASTEXITCODE -eq 0)".ToLower() >> $env:GITHUB_OUTPUT
       - uses: actions/setup-dotnet@v4
+        if: steps.check.outputs.exists == 'false'
         with:
           dotnet-version: 10.0.x
       - name: Install Inno Setup
+        if: steps.check.outputs.exists == 'false'
         run: choco install innosetup -y --no-progress
       - name: Build, test, package
+        if: steps.check.outputs.exists == 'false'
         shell: pwsh
         run: ./scripts/build.ps1
       - name: Publish release
+        if: steps.check.outputs.exists == 'false'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
