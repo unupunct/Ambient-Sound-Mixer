@@ -1,0 +1,35 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+[Dd]ebug/
+[Rr]elease/
+x64/
+*.log
+
+# Visual Studio / IDEs
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+*.rsuser
+*.DotSettings.user
+TestResults/
+*.trx
+*.coverage
+
+# NuGet
+*.nupkg
+packages/
+
+# Temporary
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
+
+# Local tooling
+.claude/
